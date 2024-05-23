@@ -1,0 +1,39 @@
+---
+title: 'Soul-Engine App'
+description: 'Hook up soul engine with distiller hardwares'
+---
+
+<Info>
+    Checkout open-souls doc here https://docs.souls.chat/
+</Info>
+
+
+## Server
+Check our fork of open souls community repo : https://github.com/Pamir-AI/community
+We are re-using the Samantha-learner soul template, however added demos/distiller/server/websocket/index.ts to dispatch "says" and "thinks" action over the websocket.
+
+First to register your soul
+```
+npm install
+npx soul-engine dev 
+```
+Then spin up the server 
+```
+npx tsx websocket/index.ts 
+```
+
+
+## Client
+Sample client code is provided here : https://github.com/Pamir-AI/DistillerSDK/blob/main/apps/app_soul.py
+
+
+
+
+### Troubleshooting
+If you running into issue like missing npm/npx you can do the following (you should not have this issue if using Distiller's linux image)
+```
+wget https://nodejs.org/dist/v20.13.1/node-v20.13.1-linux-arm64.tar.xz
+tar -xf  node-v20.13.1-linux-arm64.tar.xz
+cd node-v20.13.1-linux-arm64/
+sudo cp -R * /usr/local/
+```

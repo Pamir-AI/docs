@@ -26,6 +26,8 @@
       "group": "Get Started",
       "pages": [
         "development",
+        "sdk_docs",
+        "soul_engine_app",
         "ai_models",
         "cad_designs"
       ]
