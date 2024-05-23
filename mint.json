@@ -28,6 +28,7 @@
         "development",
         "sdk_docs",
         "soul_engine_app",
+        "hardware_hacks",
         "ai_models",
         "cad_designs"
       ]
