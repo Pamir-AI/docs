@@ -1,5 +1,4 @@
 {
-  "$schema": "https://mintlify.com/schema.json",
   "name": "Distiller Starter Kit",
   "logo": {
     "dark": "/logo/dark.svg",
