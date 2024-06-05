@@ -1,8 +1,8 @@
 {
   "name": "Distiller Starter Kit",
   "logo": {
-    "dark": "/logo/dark.svg",
-    "light": "/logo/light.svg"
+    "dark": "/logo/Dark.png",
+    "light": "/logo/Light.png"
   },
   "favicon": "/favicon.svg",
   "colors": {
@@ -24,11 +24,17 @@
     {
       "group": "Get Started",
       "pages": [
+        "Onboarding",
         "development",
         "sdk_docs",
         "soul_engine_app",
-        "hardware_hacks",
-        "ai_models",
+        "ai_models"
+      ]
+    },
+    {
+      "group": "Technical Reference",
+      "pages": [
+        "hardware_overview",
         "cad_designs"
       ]
     }
