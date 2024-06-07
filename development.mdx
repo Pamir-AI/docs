@@ -7,13 +7,15 @@ description: 'Installations'
   **Prerequisite** example run on Python 3.11.2
 </Info>
 
+### Python SDK
 To start work on your distiller apps, fork/clone repo here https://github.com/Pamir-AI/DistillerSDK
 
-We suggest to use venv, once you cd into the repo
+We suggest to use venv (we preinstall all of them on the device at this default path /home/distiller/DistillerSDK/venv)
 
 ```bash 
-python -m venv venv
-./venv/bin/python -m pip install -e .[prod]
+python3 -m venv --system-site-packages venv
+source venv/bin/activate
+pip install -e .[hardware]
 ```
 
 ### Distiller Linux Image
