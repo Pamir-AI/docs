@@ -2,3 +2,215 @@
 title: 'Distiller SDKs'
 description: 'Detailed guides on distiller python sdk'
 ---
+
+# Simple GUIs 
+
+### Canvas
+
+the fundation of our UI, a drawable area where GUI components like text and icons can be rendered.
+
+#### Methods
+
+- **`__init__(self, width, height, background_color='white', init_image=None)`**
+  - Initializes a new Canvas object with specified dimensions and optional background color and initial image.
+  - **Parameters:**
+    - `init_image`: An optional initial image to start with, if not provided, will be default white.
+  
+- **`register_canvas_image(self)`**
+  - Saves the current state of the canvas image as a checkpoint, next flush wont erase everything.
+
+- **`flush(self)`**
+  - Resets the canvas image to the last checkpoint or to a new blank image if no checkpoint is set.
+
+- **`get_draw(self)`**
+  - Returns a canvas as Image object.
+
+- **`draw_plus_pattern(self, density=10, start_pos=(5, 5), size=5)`**
+  - Example of a pattern darwing to make the background pretty, a grid of plus ('+') patterns across the canvas.
+  
+---
+
+
+### GUIComponent
+
+A base class for GUI components that can be drawn on a canvas.
+
+#### Methods
+
+- **`__init__(self, position=(0, 0))`**
+  - Initialize the GUI component with a position (where the top left corner start).
+
+---
+
+
+### Text
+
+Text - a GUI component.
+
+#### Methods
+
+- **`__init__(self, text, font_path, font_size)`**
+  - **Parameters:**
+    - `font_path`: any font file end with **.ttf** should work 
+- **`draw(self, canvas, position, centered=False, max_width=None)`**
+  - given the canvas object to draw on, with the starting position. 
+  - **Parameters:**
+    - `centered`: if true it will ignore the x position and force fit at center
+    - `max_width`: character over max_width will be trimed
+
+---
+
+
+### Icon
+
+Icon - a GUI component.
+
+#### Methods
+
+- **`__init__(self, position, icon_path, height=32, padding=5)`**
+  - **Parameters:**
+    - `position`: Position (x, y) on the canvas. 
+    - `icon_path`: Path to the icon image (should have white background).
+    - `height` : adjust the icon w,h ratio based on the height
+- **`draw(self, canvas)`**
+  - given the canvas object to draw on, with the starting position. 
+
+---
+
+### Box
+
+Represents a rectangular box that can be filled or outlined - part of the GUI.
+
+#### Methods
+
+- **`__init__(self, position, size, fill=False, corner_radius=0, line_thickness=2, padding=3)`**
+  - Initializes a Box component.
+  - **Parameters:**
+    - `position`: A tuple (x, y) representing the box's position on the canvas.
+    - `size`: A tuple (width, height) representing the dimensions of the box.
+    - `fill`: Boolean indicating whether the box should be filled.
+    - `corner_radius`: The radius of the box's corners.
+    - `line_thickness`: Thickness of the box's outline.
+    - `padding`: Padding inside the box.
+
+- **`draw(self, canvas)`**
+  - Draws the box on the specified canvas.
+  
+- **`invert_region(self, canvas)`**
+  - Inverts colors of the region within the box, normally used to indicate selections
+
+---
+
+
+### TextBox
+
+Box + Text 
+
+#### Methods
+- **`__init__(self, text, font_path, font_size, icon_path=None, size=None, position=(0, 0), fill=False, corner_radius=1, line_thickness=0, padding=0)`**
+  - **Parameters:**
+    - same as box and text param
+
+- **`draw(self, canvas)`**
+  - Draws the box, text and icon (optional) on the specified canvas.
+
+---
+
+
+### GUI
+
+Interface level class, managing all sub components.
+
+#### Methods
+- **`__init__(self, width, height, **kwargs)`**
+  - Initializes a GUI with specific dimensions.
+  - additional Parameters (kwargs) can be init_image for init canvas and position
+  
+- **`add_component(self, component)`**
+  - add Text, Box or Icon object to the GUI
+
+- **`render_all(self)`**
+  - render all objects on the canvas image
+
+- **`paste_image(self, image, position)`**
+  - manually add an image to the gui canvas
+
+---
+
+### ScrollGUI
+
+Interface level class, GUI but specific designed for list of TextBox to serve as a scroll menu
+
+#### Methods
+- **`__init__(self, width: int, height: int, bounding_box: tuple[int, int, int, int], line_space: int = 1, **kwargs)`**
+  - **Parameters:**
+    - `width/height`: size of the scroll box
+    - `bounding_box` : x, y , max_x, max_y to describe the drawing area for the texts
+    - `line_space` : space between list of textbox
+
+- **`get_selected_component(self)`**
+  - based on index id, return the selected component
+
+- **`inject_texts(self, content: str, font_path: Optional[str] = DEFAULT_FONT_PATH, font_size: Optional[int] = 20)`**
+  - a helper function to auto split the text to make sure everything fit into the bounding box 
+
+- **`render_scroll`**
+  - render the list of textboxes but also highlight the selected on (inverting color)
+  - if used list of text obejct instead of textbox, it will render and disply one text object at a time
+
+---
+
+### Page
+
+Represents a page within the application that can be displayed on the e-ink screen.
+
+#### Methods
+
+- **`__init__(self, app)`**
+  - Initializes a new Page instance.
+  - **Parameters:**
+    - `app`: The application instance to which this page belongs.
+
+- **`render_page(self, image, **kwargs)`**
+  - Renders the page with the given image.
+  - **Parameters:**
+    - `image`: The image to render on the page.
+    - `kwargs`: Additional keyword arguments to pass to app.update_screen.
+
+- **`handle_input(self, input)`**
+  - Method to handle button clicks. should be overrided to serve different apps
+
+---
+
+### Application
+
+Manages the lifecycle and rendering of pages on an e-ink display.
+
+#### Methods
+
+- **`__init__(self)`**
+  - Initializes the Application instance, setting up the e-ink screen and buttons peripherals.
+
+- **`switch_page(self, NewPage, **kwargs)`**
+  - Switches to a new page within the application.
+  - **Parameters:**
+    - `NewPage`: The new page class to switch to.
+    - `kwargs`: Additional keyword arguments for the new page.
+
+- **`update_screen(self, image, format='1bit', dithering=True)`**
+  - Updates the e-ink screen with the given image.
+  - **Parameters:**
+    - `image`: The image to display.
+    - `format`: The format of the image ('1bit' or '2bit'). 1bit is black and white, 2bit will have grey grad but slower to fresh the screen.
+    - `dithering`: Whether to apply dithering (only applicable for '1bit' format), so basically if its just black and white texts we dont need dithering to speed up the process.
+
+- **`press_callback(self, key)`**
+  - Callback function for button presses.
+  - **Parameters:**
+    - `key`: The button that was pressed. (default 0 = up, 1 = down, 2 = enter)
+
+- **`_get_system_stats(self)`**
+  - Retrieves the current system statistics such as CPU and RAM usage.
+  - **Returns:**
+    - A string representing the CPU and RAM usage.
+
