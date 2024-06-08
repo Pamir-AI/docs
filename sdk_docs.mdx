@@ -5,11 +5,12 @@ description: 'Detailed guides on distiller python sdk'
 
 # Simple GUIs 
 
+sample implementation check apps in [example folders](https://github.com/Pamir-AI/DistillerSDK/tree/pre-prod/examples)
+
 ### Canvas
 
 the fundation of our UI, a drawable area where GUI components like text and icons can be rendered.
 
-#### Methods
 
 - **`__init__(self, width, height, background_color='white', init_image=None)`**
   - Initializes a new Canvas object with specified dimensions and optional background color and initial image.
@@ -35,7 +36,6 @@ the fundation of our UI, a drawable area where GUI components like text and icon
 
 A base class for GUI components that can be drawn on a canvas.
 
-#### Methods
 
 - **`__init__(self, position=(0, 0))`**
   - Initialize the GUI component with a position (where the top left corner start).
@@ -47,7 +47,6 @@ A base class for GUI components that can be drawn on a canvas.
 
 Text - a GUI component.
 
-#### Methods
 
 - **`__init__(self, text, font_path, font_size)`**
   - **Parameters:**
@@ -65,7 +64,6 @@ Text - a GUI component.
 
 Icon - a GUI component.
 
-#### Methods
 
 - **`__init__(self, position, icon_path, height=32, padding=5)`**
   - **Parameters:**
@@ -81,7 +79,6 @@ Icon - a GUI component.
 
 Represents a rectangular box that can be filled or outlined - part of the GUI.
 
-#### Methods
 
 - **`__init__(self, position, size, fill=False, corner_radius=0, line_thickness=2, padding=3)`**
   - Initializes a Box component.
@@ -106,7 +103,7 @@ Represents a rectangular box that can be filled or outlined - part of the GUI.
 
 Box + Text 
 
-#### Methods
+
 - **`__init__(self, text, font_path, font_size, icon_path=None, size=None, position=(0, 0), fill=False, corner_radius=1, line_thickness=0, padding=0)`**
   - **Parameters:**
     - same as box and text param
@@ -121,7 +118,7 @@ Box + Text
 
 Interface level class, managing all sub components.
 
-#### Methods
+
 - **`__init__(self, width, height, **kwargs)`**
   - Initializes a GUI with specific dimensions.
   - additional Parameters (kwargs) can be init_image for init canvas and position
@@ -141,7 +138,7 @@ Interface level class, managing all sub components.
 
 Interface level class, GUI but specific designed for list of TextBox to serve as a scroll menu
 
-#### Methods
+
 - **`__init__(self, width: int, height: int, bounding_box: tuple[int, int, int, int], line_space: int = 1, **kwargs)`**
   - **Parameters:**
     - `width/height`: size of the scroll box
@@ -164,7 +161,6 @@ Interface level class, GUI but specific designed for list of TextBox to serve as
 
 Represents a page within the application that can be displayed on the e-ink screen.
 
-#### Methods
 
 - **`__init__(self, app)`**
   - Initializes a new Page instance.
@@ -186,7 +182,6 @@ Represents a page within the application that can be displayed on the e-ink scre
 
 Manages the lifecycle and rendering of pages on an e-ink display.
 
-#### Methods
 
 - **`__init__(self)`**
   - Initializes the Application instance, setting up the e-ink screen and buttons peripherals.
@@ -214,3 +209,144 @@ Manages the lifecycle and rendering of pages on an e-ink display.
   - **Returns:**
     - A string representing the CPU and RAM usage.
 
+# Peripherals interfaces
+
+### Button 
+
+Handles button interactions and manages shutdown procedures, a child class of SAM (Signal Aggregation Module) our more lower level base class.
+
+- **`__init__(self, callback)`**
+  - Initializes the Button with a callback function to handle button states.
+  - **`Parameters`** :
+    - callback: A callback function that processes button state changes.
+
+- **`process_button_state(self, state)`**
+  - Processes the received button state and triggers the appropriate callback.
+  - **`Parameters`** :
+    - `state`: The button state byte to process.
+
+- **`press_callback(self, key)`**
+  - Hijack the button press events callback to this one.
+  - **`Parameters`** :
+    - `key`: The identifier of the button that was pressed. 
+
+- **`shutdown(self)`**
+  - In the shutdown menu we wrote a hack way to hijack the screen from user, so the button press handle will be moved to the confirm screen
+
+---
+
+### Cam
+
+Cam operations including configuration, preview, and image capturing, specifically designed for use with an e-ink display.
+
+- **`__init__(self, eink)`**
+  - Initializes the Cam class with an e-ink display object.
+  - **Parameters:**
+    - `eink`: The e-ink display object to which images will be sent.
+
+- **`_config(self)`**
+  - Configures the camera settings for both preview and still capture modes, including image size and transformation such as horizontal and vertical flips.
+  - To use your own customized cam setting, check out [picamera2 lib](https://github.com/raspberrypi/picamera2)
+
+- **`preview(self)`**
+  - Starts the camera preview in a separate thread to continuously update the e-ink display with new images.
+
+- **`_start_cam(self, thread_event)`**
+  - Initializes and starts the camera, capturing images in a loop until the thread is stopped. Updates the e-ink display with processed images.
+  - **Parameters:**
+    - `thread_event`: A threading.Event object used to control the execution of the thread.
+
+- **`capture(self)`**
+  - Captures an image, stops the camera, saves the image to disk, and stops the thread worker.
+  - **Returns:**
+    - `Optional[Image.Image]`: The captured image if available, otherwise `None`.
+
+---
+
+### Eink
+
+Manages an e-ink display, handling animations, screen updates, and transitions between different bit modes.
+
+- **start_animation**
+  Starts an animation on the e-ink display using images from a specified folder.
+
+  - **Parameters:**
+    - `canvas_image` (`Image.Image`): The background image for the animation.
+    - `image_folder` (`str`): The directory containing the animation images.
+
+- **stop_animation**
+  Stops the currently running animation.
+
+- **transit_to_1bit**
+  Transitions the display to 1-bit byte array, for the eink firmware to consume.
+
+- **clear_screen**
+  Clears the e-ink screen, setting it to a blank state.
+
+- **update_screen_1bit**
+  Updates the e-ink display with a provided image in 1-bit format.
+
+  - **Parameters:**
+    - `image` (`Image.Image`): The image to display.
+    - `dithering` (`bool`): Whether to apply dithering algo to the image.
+
+- **update_screen_2bit**
+  Updates the e-ink display with a provided image in 2-bit format.
+
+  - **Parameters:**
+    - `image` (`Image.Image`): The image to display.
+
+- **_status_check**
+  Checks and updates the display status to ensure proper mode transitions. this need to called whenever 2bit transite to 1bit
+
+- **preprocess_1bit**
+  Prepares an image for 1-bit display.
+
+  - **Parameters:**
+    - `image` (`Image.Image`): The image to preprocess.
+    - `dtype` (`np.dtype`): The data type for the numpy array, uint8 if no dithering else float32
+
+- **preprocess_2bit**
+  Prepares an image for 2-bit display.
+
+  - **Parameters:**
+    - `image` (`Image.Image`): The image to preprocess.
+
+---
+
+### AudioRecorder
+
+Handles the audio recording process using `pyaudio`.
+
+- **`__init__(self)`**
+  - Initializes the AudioRecorder, setting up `pyaudio` instantiation.
+
+- **`record_control(self)`**
+  - Controls the start and stop of the recording.
+  - **Returns**:
+    - **bool**: `True` if recording started, `False` if stopped.
+
+- **`start_record(self)`**
+  - Starts the audio recording.
+  - Opens an audio stream and begins reading data into a buffer.
+
+- **`stop_record(self)`**
+  - Stops the audio recording and closes the audio stream.
+
+- **`_record_loop(self, thread_event)`**
+  - Continuously records audio while the thread event is set.
+  - **Parameters**:
+    - **thread_event** (`threading.Event`): Controls the active state of the recording loop.
+
+- **`save_wav(self)`**
+  - Saves the recorded audio data to a `.wav` file.
+  - Sets the channels, sample width, and frame rate for the `.wav` file before writing.
+
+---
+
+### Audio/Speaker Functions
+
+Plays an audio file specified by its path.
+
+- **Parameters:**
+  - `audio_path` (`str`): The file path of the `.wav` audio file to be played.
