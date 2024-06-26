@@ -33,6 +33,7 @@
     {
       "group": "Technical Reference",
       "pages": [
+        "take_it_apart_guide",
         "hardware_overview",
         "cad_designs"
       ]
