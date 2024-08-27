@@ -107,9 +107,9 @@ Please use your arrow key to select sound card number 2, then press enter.
 
 <img src='images/hardware/alsamixer1.png'/>
 
-Next, for Microphone, using left and right arrow key to turn **Right In** Channel to a volume that you desire. Usually a gain of 0 db (The lowest setting) should be suffcient. If you turn the gain setting too high, your might not able to hear anything. 
+Next, for Microphone, experiment with the gain setting by changing the value for **Capture**, **Left in** and **Right in**.
 
-For Speaker, turn **Right Out** Channel to a volume that you desire. Again, If you turn the gain setting too high, you might not able to hear anything.
+For Speaker, turn **Speaker** , **Right Out** and **Left Out**Channel to a volume that you desire.
 
 Once done, save the setting by runnig
 
@@ -133,7 +133,10 @@ sudo arecord -D hw:2,0 -f S32_LE -r 16000 -c 2 test.wav
 wget https://download.samplelib.com/wav/sample-15s.wav
 sudo aplay -Dhw:2 sample-15s.wav
 ```
-
+or just use 
+```
+speaker-test 
+```
 
 
 
