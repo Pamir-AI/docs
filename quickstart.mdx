@@ -15,7 +15,7 @@ Once the device is powered on, go to the `Wifi-use mcp server`.
 
 ![Screenshot](/images/Screenshot2025-05-08at10.59.39PM.png)
 
-Be patient (treat it like a 5-year-old) and guide it step by step. You can start by saying:  
+Be patient (treat it like a 5-year-old) and guide it step by step. You can start by saying:\
 **"help me scan Wi-Fi first"**
 
 Once you see your desired network listed (should match your PC’s), tell it the name and password.
@@ -34,7 +34,7 @@ Once you know the device’s IP address, we strongly recommend connecting it to 
 
    ![SSH Screenshot](/images/Screenshot2025-05-09at11.08.24AM.png)
 4. After entering the password and connecting, wait a few minutes while the Cursor server sets up.
-5. You’re ready to code! We recommend giving Cursor context via `@llms.txt`, which contains most of the necessary info. You’ll mostly be working inside `/mcp_server`.
+5. You’re ready to code\! We recommend giving Cursor context via `@llms.txt`, which contains most of the necessary info. You’ll mostly be working inside `/mcp_server`.
 
 ## Configurations
 
@@ -75,12 +75,11 @@ config = {
         },
     }
 }
-
 ```
 
 and for backend related configurations, check /utils/default_config.json
 
-```
+```python
 {
   "llm_providers": { # Definition of Local / Online LLM providers 
     "llama-cpp": {
