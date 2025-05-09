@@ -9,7 +9,7 @@ The GUI came with device is still WIP (please be patient for modules to load, sm
 
 ## Connect to WIFI
 
-The only way for distiller to connect to WIFI (so you can ssh into it) is via VOICE, yes VOICE. 
+The only way for distiller to connect to WIFI (so you can ssh into it) is via VOICE, yes VOICE.
 
 Once the device is powered on, go to the Wifi-use mcp server
 
@@ -18,16 +18,114 @@ Once the device is powered on, go to the Wifi-use mcp server
 Try to be patient (like how u treate a 5 years old) and guide it to connect wifi for you step by step, you can start by : \
 "help me scan wifi fist"
 
-Once you see the wifi you want to connect to listed (should be the one you PC connected to), tell it the name and password. 
+Once you see the wifi you want to connect to listed (should be the one you PC connected to), tell it the name and password.
 
 once you successfully connected to the wifi (congrat, I know its very hard), you can ask the device to show you ssh instruction and it should guide you from there.
 
-## How we suggest you to code 
+## How we suggest you to code
 
-Once you know the IP address of the device, we strongly recommand link it up with cursor to create your mcp server script. 
+Once you know the IP address of the device, we strongly recommand link it up with cursor to create your mcp server script.
 
 1. Download cursor here https://www.cursor.com/en on you PC
-2. Select Connect via SSH
-3. 
+2. Select Connect via SSH 
 
-   ![Screenshot 2025-05-09 at 10.51.19 AM.png](/images/Screenshot2025-05-09at10.51.19AM.png)
+   ![image.png](/images/image.png)
+3. Type in the ssh ip provided by your device, for example 
+
+   ![Screenshot 2025-05-09 at 11.08.24 AM.png](/images/Screenshot2025-05-09at11.08.24AM.png)
+4. Once you type in the password requested and connected, wait a few minite for the cursor server to setup. 
+5. You can start coding now\! we recommand giving cursor context over @llms.txt, since we tried to fit in almost all the necessary infomation in there, and mainly you should try your idea in /mcp_server
+
+## Configurations 
+
+Anything related to display are located in /ui/display_config.py , see details below
+
+```
+config = {
+    "display": {
+        "eink_adaptive_capture": True,  # Enable adaptive refresh rate
+        "eink_dithering_enabled": False, # Warning, Enable this will reduce refresh rate
+        "eink_dithering_method": 1,  # 1=Floyd-Steinberg, 2=Ordered
+        "eink_full_refresh_interval": 15, # Full flush every 15 sec
+        "eink_refresh_interval": 1500, # Quick flush every 1.5 sec 
+        "eink_enabled": True, # You need to enable this to run on board, for testing you can turn this off 
+        "eink_buffer_size": 1,  # Reduced buffer size to save memory
+        "eink_threshold": 150,  # Threshold for black/white conversion (0-255)
+        "eink_save_capture": False,  # Save screen captures for debugging
+        "eink_bw_conversion": {
+            "method": 1,  # 1=Simple Threshold, 2=Adaptive Threshold
+            "use_gamma": True,  # Apply gamma correction before thresholding
+            "gamma_value": 0.9,  # Gamma correction value (0.5-1.0, lower = darker)
+            "adaptive_block_size": 16,  # Block size for adaptive thresholding (must be odd)
+            "adaptive_c": 5,  # Constant subtracted from block mean/median (can be negative)
+        },
+        "dark_mode": True,  # Set dark mode as default
+        "show_system_stats": True,  # Enable system monitor display
+        "width": 240, # Screen size
+        "height": 416, # Screen size
+        "font": { # Font related 
+            "primary_font": "fonts/MartianMonoNerdFont-CondensedBold.ttf",  # Default font for UI elements
+            "font_size_small": 12,
+            "font_size_normal": 14,
+            "font_size_medium": 16,
+            "font_size_large": 18,
+            "font_size_xlarge": 20,
+        },
+    }
+}
+```
+
+and for backend related configurations, check /utils/default_config.json
+
+```
+{
+  "llm_providers": { # Definition of Local / Online LLM providers 
+    "llama-cpp": {
+      "server_url": "http://127.0.0.1:8000", 
+      "model_name": "qwen2.5-3b-instruct-q4_k_m.gguf", # Change if you want to swap to other small models
+      "provider_type": "llama-cpp",
+      "api_key": "",
+      "timeout": 150, # Time needed to wait for model to load
+      "temperature": 0.7,
+      "top_p": 0.8,
+      "top_k": 20,
+      "repetition_penalty": 1.0,
+      "n_ctx": 32768,
+      "max_tokens": 4096,
+      "stop": [
+        "user:"
+      ],
+      "streaming": true,
+      "streaming_chunk_size": 4,
+      "max_messages_length": 100 # Max num of message per conversation
+    },
+    "openrouter": { 
+	  # Visit https://openrouter.ai/ to setup your account + pick models
+      "server_url": "https://openrouter.ai/api/v1",
+      "model_name": "google/gemini-2.0-flash-exp:free",
+      "provider_type": "openrouter",
+      "api_key": "sk-or-v1-*",
+      "timeout": 60,
+      "temperature": 0.7,
+      "streaming": true,
+      "max_tokens": 8192
+    }
+  },
+  "active_llm_provider": "llama-cpp", # If you want online model, which provider name here 
+  "logging": {
+    "level": "INFO", # If use DEBUG, chat history will be saved locally for debugging purpose
+    "file_enabled": false,
+    "file_path": "mcp_client.log"
+  },
+  "prompts": {
+	# You can update global system prompt here 
+    "default_system_prompt": "You are a helpful assistant for the device called Distiller. use the tools provided to you to help the user."
+  },
+  "mcp_server": {
+    "server_script_path": "*"
+  },
+  "display": {
+    "dark_mode": "false"
+  }
+}
+```
