@@ -24,17 +24,7 @@
     {
       "group": "Get Started",
       "pages": [
-        "Onboarding",
-        "development",
-        "sdk_docs"
-      ]
-    },
-    {
-      "group": "Technical Reference",
-      "pages": [
-        "take_it_apart",
-        "hardware_overview",
-        "cad_designs"
+        "quickstart"
       ]
     }
   ],
