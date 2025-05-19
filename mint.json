@@ -27,9 +27,16 @@
         "Onboarding"
       ]
     },
-    {"group": "Firmware updates",
+    {
+      "group": "Firmware Updates",
       "pages": [
         "how_to_flash"
+      ]
+    },
+    {
+      "group": "Start Coding",
+      "pages": [
+        "virtual_env"
       ]
     }
   ],
