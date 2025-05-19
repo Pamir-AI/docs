@@ -4,12 +4,14 @@ description: "The device should come pre-flashed. If you need to flash a new CM5
 ---
 
 1. Hold the **CM5-BOOT** button, then plug in the USB-C cable (one end into the device and the other into your PC).
+
+   ![Boot Button Pn](/images/boot-button.png)
 2. If connected correctly, you should see the red LED turn on. Now follow the steps [here](https://www.raspberrypi.com/documentation/computers/compute-module.html#set-up-the-host-device) to enable `rpiboot`.
 3. Once `rpiboot` runs successfully, your PC might prompt that a new device has been recognized — you can ignore that for now. Open **Raspberry Pi Imager** and flash our provided image onto the device.
 4. When prompted to customize the image:
 
-   ![image.png](/images/image.png)
+   ![Imager Prompt 0 Pn](/images/imager-prompt-0.png)
    - Set a username and password (use whatever you prefer, but make sure to save them — the default we use is: `distiller` / `one`)
    - Enter your Wi-Fi name and password if you want the device to auto-connect to your network. This will also let you see the IP address for SSH access after boot.
-   - **Enable SSH** 
+   - **Enable SSH**
 5. Now flash the image and wait for the process to complete.
