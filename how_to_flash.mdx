@@ -15,3 +15,91 @@ description: "The device should come pre-flashed. If you need to flash a new CM5
    - Enter your Wi-Fi name and password if you want the device to auto-connect to your network. This will also let you see the IP address for SSH access after boot.
    - **Enable SSH**
 5. Now flash the image and wait for the process to complete.
+
+## How to Mount SD Card
+
+Once SD card inserted, follow the steps below : 
+
+If you run:
+
+```
+lsblk
+```
+
+you should see the SD card drive listed.
+
+Then, create a mount point:
+
+```
+sudo mkdir -p /mnt/sdcard
+```
+
+Assuming your SD card’s partition is `/dev/mmcblk1p1` and it's formatted as **FAT32** or **ext4**, mount it with:
+
+```
+sudo mount /dev/mmcblk1p1 /mnt/sdcard
+```
+
+Finally, verify the contents:
+
+```
+ls /mnt/sdcard
+```
+
+to check if the files show up correctly.
+
+If you want the SD card to **automatically mount at boot**, follow the steps below carefully:
+
+#### 1. **Find the device's UUID**
+
+Run:
+
+```
+sudo blkid
+```
+
+Look for your SD card (e.g., `/dev/mmcblk1p1`) and copy its `UUID`.
+
+#### 2. **Edit **`/etc/fstab`
+
+Open the file:
+
+```
+sudo nano /etc/fstab
+```
+
+Add a new line at the end using the UUID. Example for FAT32:
+
+```
+UUID=YOUR_UUID_HERE /mnt/sdcard vfat defaults,nofail 0 0
+```
+
+Or for ext4:
+
+```
+UUID=YOUR_UUID_HERE /mnt/sdcard ext4 defaults,nofail 0 0
+```
+
+Replace `YOUR_UUID_HERE` with the actual UUID from step 1.
+
+> The `nofail` option ensures your system still boots even if the SD card is not inserted.
+
+#### 3. **Create the mount directory (if not already created)**
+
+```
+sudo mkdir -p /mnt/sdcard
+```
+
+#### 4. **Test it works**
+
+You can test the `fstab` entry without rebooting:
+
+```
+sudo mount -a
+```
+
+Then check:
+
+```
+ls /mnt/sdcard
+```
