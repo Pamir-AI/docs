@@ -1,0 +1,133 @@
+---
+title: "Start coding"
+description: "Once you’re able to SSH into the device, follow this guide to set up the coding environment."
+---
+
+## **Auto-Starting Software**
+
+By default, the device runs `/home/distiller/distiller-cm5-python/spin_up.sh` at boot. This script launches the main app you see on-screen. If you want to disable it—or add or remove processes—edit this file.
+
+## **Work Environment**
+
+We use [**uv**](https://docs.astral.sh/uv/pip/packages/) for Python dependency management (think of it as a faster `pip install`). All dependencies are listed in `requirements.txt`.
+
+Pay attention to two repositories:
+
+- [**distiller-cm5-python**](https://github.com/Pamir-AI/distiller-cm5-python) – contains the agent module (MCP server, MCP client, LLM backend), UI module, and configuration files.
+- [**distiller-cm5-sdk**](https://github.com/Pamir-AI/distiller-cm5-sdk) – provides SDKs for Whisper transcription (mic), Piper TTS (speaker), and RGB LED control.
+
+### **Recommended Way to Start Coding on Distiller**
+
+As mentioned in the Quickstart guide, we recommend using **Cursor** (a fork of VS Code) to set up your coding environment. Once you've [connected to your Distiller device via SSH](https://docs.pamir.ai/Onboarding#suggested-coding-setup) using the Cursor server:
+
+**When Vibe Coding**
+
+To start, let Cursor access your working folder:
+
+![Cursor Folder 0 Pn](/images/cursor-folder-0.png)
+
+The only thing you need to worry about is scripting in the folder:\
+`/home/distiller/distiller-cm5-python/distiller_cm5_python/mcp_server`
+
+Create your Python file with a name ending in `_server.py`. Our main UI will automatically detect and load any MCP server script. _(Learn more about MCP _[_here_](https://github.com/modelcontextprotocol)_ )_
+
+We also recommend using `/home/distiller/distiller-cm5-python/llms.txt` to help brainstorm ideas and kickstart your scripting. For example:
+
+| ![Cursor Chat 0 Pn](/images/cursor-chat-0.png) | ![Cursor Chat 1 Pn](/images/cursor-chat-1.png) |
+| :--------------------------------------------: | :--------------------------------------------: |
+
+We are continuously improving the environment management for each MCP; it's still a work in progress. For now, please manage dependencies within your virtual environment accordingly.
+
+### **Configurations You Need to Know**
+
+1. **Set your default MCP server for CLI mode**
+
+   Running `python main.py` starts the app in CLI mode for quick testing. It loads the default task configuration from:\
+   `/home/distiller/distiller-cm5-python/distiller_cm5_python/utils/default_config.json`
+
+   Make sure to set the `server_script_path` to the MCP server you want to test with. For example:
+
+   ```json
+   "mcp_server": {
+       "server_script_path": "distiller_cm5_python/mcp_server/wifi-use_server.py"
+     },
+   ```
+2. **Set the Model You Want to Use**
+
+   The device includes a **Qwen2.5 3B** model located in:\
+   `/home/distiller/distiller-cm5-python/distiller_cm5_python/llm_server/models`
+
+   If you'd like to try a different model (in **GGUF** format), simply download it to the same folder and update the model name in the config under `llm_providers -> model_name`. For example:
+
+   ```json
+   "llm_providers": {
+       "llama-cpp": {
+         "model_name": "qwen2.5-3b-instruct-q4_k_m.gguf",
+   		...
+   	}
+   } 
+   ```
+3. **What If I Want to Use an Online Model?**
+
+   We’ve prepared a way to connect with **OpenRouter**, where you can choose from a variety of models to try. Make sure to pick a model that supports **tool calling** and **streaming**. _(Learn more _[_here_](https://openrouter.ai/rankings)_.)_
+   1. Set the `model_name` and `api_key` you receive from OpenRouter
+
+      ```json
+      "openrouter": {
+            "server_url": "https://openrouter.ai/api/v1",
+            "model_name": "google/gemini-2.0-flash-exp:free",
+            "provider_type": "openrouter",
+            "api_key": "sk-or-v1-*",
+            "timeout": 60,
+            "temperature": 0.7,
+            "streaming": true,
+            "max_tokens": 8192
+          }
+      ```
+   2. Switch the `active_llm_provider` from `llama-cpp` to `openrouter`
+
+      ```json
+        "active_llm_provider": "openrouter",
+      ```
+4. **Adjust Logging Level for Better Debugging**
+
+   To enable more detailed logs, simply change `logging -> level` from `INFO` to `DEBUG`.
+
+   ```json
+   "logging": {
+       "level": "DEBUG"
+     },
+   ```
+
+   **Note:** When `DEBUG` level is enabled:
+   - A `debug_message_traffic_<timestamp>.json` file will be created in the current folder, containing the full conversation history of that session.
+   - An `event_logs/event_log_<timestamp>.jsonl` file will also be generated, capturing all events sent to the UI.
+5. **Update System Prompt**
+
+   The `default_system_prompt` applies to all conversation sessions. Adjust it as needed to guide the model's behavior.
+
+   ```json
+   "prompts": {
+       "default_system_prompt": "You are a helpful assistant for the device called Distiller. use the tools provided to you to help the user."
+     },
+   ```
+
+**When Testing/Debugging Changes**
+
+Start by activating the virtual environment:
+
+```
+source .venv/bin/activate
+```
+
+(start from the `/home/distiller/distiller-cm5-python` folder)
+
+The fastest way to validate your changes is by running:
+
+```
+python main.py
+```
+
+This launches the main app in **CLI mode**, allowing you to quickly test by typing queries directly into the terminal.
+
+![Cursor Terminal 0 Pn](/images/cursor-terminal-0.png)
