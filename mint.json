@@ -26,6 +26,11 @@
       "pages": [
         "Onboarding"
       ]
+    },
+    {"group": "Firmware updates",
+      "pages": [
+        "how_to_flash"
+      ]
     }
   ],
   "footerSocials": {
