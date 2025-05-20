@@ -28,15 +28,15 @@
       ]
     },
     {
-      "group": "Firmware Updates",
-      "pages": [
-        "how_to_flash"
-      ]
-    },
-    {
       "group": "Start Coding",
       "pages": [
         "virtual_env"
+      ]
+    },
+    {
+      "group": "Firmware Updates",
+      "pages": [
+        "how_to_flash"
       ]
     }
   ],
