@@ -20,6 +20,10 @@ Pay attention to two repositories:
 
 As mentioned in the Quickstart guide, we recommend using **Cursor** (a fork of VS Code) to set up your coding environment. Once you've [connected to your Distiller device via SSH](https://docs.pamir.ai/Onboarding#suggested-coding-setup) using the Cursor server:
 
+### Tutorial Video
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/ivs0Els2_nc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen />
+
 **When Vibe Coding**
 
 To start, let Cursor access your working folder:
@@ -29,7 +33,7 @@ To start, let Cursor access your working folder:
 The only thing you need to worry about is scripting in the folder:\
 `/home/distiller/distiller-cm5-python/distiller_cm5_python/mcp_server`
 
-Create your Python file with a name ending in `_server.py`. Our main UI will automatically detect and load any MCP server script. _(Learn more about MCP _[_here_](https://github.com/modelcontextprotocol)_ )_
+Create your Python file with a name ending in `_server.py`. Our main UI will automatically detect and load any MCP server script. [**_(Learn more about MCP here )_**](https://github.com/modelcontextprotocol)
 
 We also recommend using `/home/distiller/distiller-cm5-python/llms.txt` to help brainstorm ideas and kickstart your scripting. For example:
 
@@ -69,7 +73,7 @@ We are continuously improving the environment management for each MCP; it's stil
    ```
 3. **What If I Want to Use an Online Model?**
 
-   We’ve prepared a way to connect with **OpenRouter**, where you can choose from a variety of models to try. Make sure to pick a model that supports **tool calling** and **streaming**. _(Learn more _[_here_](https://openrouter.ai/rankings)_.)_
+   We’ve prepared a way to connect with **OpenRouter**, where you can choose from a variety of models to try. Make sure to pick a model that supports **tool calling** and **streaming**. [**_(Learn more here.)_**](https://openrouter.ai/rankings)
    1. Set the `model_name` and `api_key` you receive from OpenRouter
 
       ```json
@@ -129,5 +133,3 @@ python main.py
 ```
 
 This launches the main app in **CLI mode**, allowing you to quickly test by typing queries directly into the terminal.
-
-![Cursor Terminal 0 Pn](/images/cursor-terminal-0.png)
