@@ -1,0 +1,19 @@
+---
+title: "Frequent Q&A"
+description: "For quick trouble shooting"
+---
+
+## **What if my program is stuck on the boot-up screen?**
+
+This usually means the main program triggered at boot ran into a bug.
+
+**Quick Debug Steps:**
+
+1. **SSH in** – Even if the screen looks frozen, you can still SSH as long as the device is on a known Wi-Fi. If unsure, check your router (e.g., TP-Link admin page) for the device's IP.
+2. **Check Logs** – Run:
+
+   ```
+   journalctl -u mystartup.service -n 100 
+   ```
+
+   This will show the last 100 lines of logs from your startup service. Look for errors or crash traces to locate the issue.

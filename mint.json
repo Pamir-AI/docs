@@ -30,7 +30,8 @@
     {
       "group": "Start Coding",
       "pages": [
-        "virtual_env"
+        "virtual_env",
+        "qna"
       ]
     },
     {
