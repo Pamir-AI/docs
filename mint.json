@@ -1,32 +1,21 @@
 {
   "name": "Distiller Starter Kit",
-  "logo": {
-    "dark": "/logo/Dark.png",
-    "light": "/logo/Light.png"
-  },
+  "logo": { "dark": "/logo/Dark.png", "light": "/logo/Light.png" },
   "favicon": "/favicon.svg",
   "colors": {
     "primary": "#0D9373",
     "light": "#07C983",
     "dark": "#0D9373",
-    "anchors": {
-      "from": "#0D9373",
-      "to": "#07C983"
-    }
+    "anchors": { "from": "#0D9373", "to": "#07C983" }
   },
   "topbarLinks": [
-    {
-      "name": "Support",
-      "url": "founders@pamir.ai"
-    }
+    { "name": "Support", "url": "founders@pamir.ai" }
   ],
   "navigation": [
     {
       "group": "Get Started",
-      "pages": [
-        "Onboarding"
-      ]
-    },
+      "pages": ["Onboarding"]
+    }
   ],
   "footerSocials": {
     "x": "https://x.com/pamir_ai"
