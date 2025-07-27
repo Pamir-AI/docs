@@ -1,55 +1,107 @@
 ---
-title: "Quickstart"
+title: "Device Setup and Usage Guide"
 description: "What to do once you receive the device"
 ---
 
-## Overview
+## Power Setup
 
-The GUI that comes with the device is still a work in progress (please be patient as modules load—smashing buttons won't help here XD). We’ve provided some simple ways to kickstart an "LLM-controlled task." There are only a few buttons—you’ll figure them out.
+To power on the device, connect it to the provided power supply using the first USB-C port on the left side of the device.
 
-> **Note:** The E Ink display is not a touchscreen. Please navigate using the side buttons.
->
-> **Please use the Pi charger that comes with the device.** This is because the Raspberry Pi CM5 requires a specific combination of voltage and current for proper power supply.
->
-> ![Hardware Overview Pn](/images/hardware-overview.png)
+**Power Requirements:**
 
-## Connect to Wi-Fi
+- Minimum 27W power supply
+- 9V at 3A output
+- Use only the leftmost USB-C port for power
 
-### Tutorial Video
+## Initial Network Setup
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/moUBv87Yaps" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen />
+### First-Time WiFi Configuration
 
-The only way for Distiller to connect to Wi-Fi (so you can SSH into it) is via **voice**—yes, voice.
+1. When the device has never been connected to your network, it will automatically prompt you to scan a QR code
+2. Scanning this QR code opens a website where you can enter your WiFi network credentials
+3. Complete the setup process by entering the desired network information
+4. Once setup is complete, the device will connect to the network and display a new QR code
 
-Once the device is powered on, go to the `Wifi-use mcp server`.
+### Accessing the Web Interface
 
-![Screenshot](/images/Screenshot2025-05-08at10.59.39PM.png)
+After initial setup, scan the new QR code displayed on the device screen. This will redirect you to the device's web interface.
 
-Be patient (treat it like a 5-year-old) and guide it step by step. You can start by saying:\
-**"help me scan Wi-Fi first"**
+## Project Management
 
-Once you see your desired network listed (should match your PC’s), tell it the name and password.
+The web interface provides a GUI for easy project creation and management:
 
-Once successfully connected (congrats, we know it’s hard), ask the device to show SSH instructions—it’ll guide you from there.
+- Create new projects through the graphical interface
+- All projects are created in the `projects` directory located inside the home directory
+- Open dedicated terminal sessions (tmux) for each project
+- Support for multiple terminals per project or working on different projects simultaneously
+- Sessions are persistent as long as the device is powered on
+- Work on projects directly from the terminal environment
 
-## Suggested Coding Setup
+### Mobile Access
 
-Once you know the device’s IP address, we strongly recommend connecting it to [Cursor](https://www.cursor.com/en) to write your `mcp_server` script.
+You can switch to your phone to continue working when you need to step away from your laptop. The mobile UI is still a work in progress, but remains very usable for most tasks.
 
-1. Download Cursor on your PC.
-2. Select “Connect via SSH”.
+### File Management
 
-   ![Cursor Pic 0 Pn](/images/cursor-pic-0.png)
-3. Enter the SSH IP provided by your device, for example:
+The web interface includes a built-in file explorer that allows you to:
 
-   ![Cursor Pic 1 Pn](/images/cursor-pic-1.png)
-4. After entering the password and connecting, wait a few minutes while the Cursor server sets up.
-5. You’re ready to code\! We recommend giving Cursor context via `@llms.txt`, which contains most of the necessary info. You’ll mostly be working inside `/mcp_server`.
+- Browse project files and directories
+- Download files to your local device by right-clicking and selecting download
+- Conveniently transfer files between the device and your local machine
 
-> for more details please check [how-to-code](https://docs.pamir.ai/virtual_env) section
+## Claude Code Integration
 
-## How to shutdown device
+The device comes with Claude Code pre-installed and ready to use.
 
-![Shutdown 0 Pn](/images/shutdown-0.png)
+**Important:** Always use `distiller-cc` instead of the standard `claude` command. The `distiller-cc` wrapper automatically loads the entire hardware SDK context, enabling you to ask questions about the hardware directly without needing to reference documentation manually.
 
-once proceed with shutdown, the device should safely poweroff after few seconds and all status led should be off, then you can unplug the power.
+### Standard Mode
+
+Launch Claude Code from any directory using:
+
+```bash
+distiller-cc
+```
+
+This command is a wrapper around the standard `claude` command that:
+
+- Sets up a default Claude Code environment with custom permissions configured for optimal security
+- Automatically loads comprehensive hardware SDK documentation into context
+- Enables direct hardware-related questions and programming assistance
+
+You can ask Claude about any aspect of the hardware, including GPIO pins, sensors, displays, audio, camera, and more - it has complete knowledge of the hardware SDK.
+
+### Hardware Reference
+
+For GPIO pin configurations and hardware connections, refer to the pin-out diagram:
+
+![Pin Out Info Pn](/images/pin-out-info.png)
+
+### YOLO Mode
+
+For advanced users who want fewer restrictions:
+
+```bash
+distiller-cc yolo
+```
+
+This launches Claude Code with less restrictive permissions, requiring minimal user intervention. Use with caution as this reduces safety guardrails.
+
+## Status LED System
+
+The device features status lights that indicate the current state of the Claude Code REPL:
+
+| LED Color  | Status                   | Description                                                                |
+| ---------- | ------------------------ | -------------------------------------------------------------------------- |
+| **Yellow** | Request Acknowledged     | Claude has received and acknowledged your request                          |
+| **Blue**   | Tool Execution / Waiting | Claude is either calling a tool or waiting for user permission             |
+| **Green**  | Tool Completed           | A tool call has returned results and Claude is proceeding to the next task |
+
+### Monitoring Workflow
+
+- **Yellow**: Your request is being processed
+- **Blue**: Claude is actively working or requires permission
+  - If the LED stays blue for an extended period, Claude may be waiting for user approval
+- **Green**: Task completion, Claude is moving on to the next operation
+
+This LED system allows you to monitor Claude's progress without constantly checking the terminal, letting you work hands-free while staying informed about the system status.
