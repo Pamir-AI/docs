@@ -27,19 +27,6 @@
         "Onboarding"
       ]
     },
-    {
-      "group": "Start Coding",
-      "pages": [
-        "virtual_env",
-        "qna"
-      ]
-    },
-    {
-      "group": "Firmware Updates",
-      "pages": [
-        "how_to_flash"
-      ]
-    }
   ],
   "footerSocials": {
     "x": "https://x.com/pamir_ai"
