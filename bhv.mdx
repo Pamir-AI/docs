@@ -129,9 +129,13 @@ When battery level is between 1% and 5%:
 
 # Quick Troubleshooting
 
+**Can't turn off the side RGB LED?**
+
+The side firing LED will stay on after shutdown for people show off their badges during DEFCON. To properly turn of the RGB led, please use the "badge_ai" from the main menu and ask it to turn it off. If this still not working, please shutdown the device and reinsert the battery.
+
 **Button got stucked?**
 
-To get unstucked temporarily, press the button from the side away from the screen. Issue is due to 3D printing tolerence issue. To solve this issue permanently, use a file to file away the button slots. 
+To get unstucked temporarily, press the button from the side away from the screen. Issue is due to 3D printing tolerence issue. To solve this issue permanently, use a file to file away the button slots.
 
 **Device won't turn on:**
 
@@ -159,3 +163,19 @@ To get unstucked temporarily, press the button from the side away from the scree
 1. Verify charger supports USB Power Delivery
 2. Ensure charger provides 9V/3A output
 3. Check USB-C cable connection
+
+# Advance User Guide
+
+### Access Raspberry Pi Inside
+
+To access, first configure the wifi using the wifi setup page from the main ui. Then scan the QR code on your phone to setup the wifi. Once connected, the device ip will be shown on the screen. \
+\
+To ssh into the device. use the following command
+
+```powershell
+ssh distiller@<ip-of-your-device>
+```
+
+<Tip>
+  Password is 'one'
+</Tip>
