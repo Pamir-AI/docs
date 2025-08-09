@@ -3,6 +3,94 @@ title: "Distiller BHV Edition User Guide"
 description: "Quick reference guide for your Distiller Biohacking Village edition"
 ---
 
+<Note>
+  - **SDK**: [GitHub - Pamir-AI/distiller-cm5-sdk (BHV branch)](https://github.com/Pamir-AI/distiller-cm5-sdk/tree/BHV)
+  - **Python Source Files**: [GitHub - Pamir-AI/distiller-cm5-python (BHV branch)](https://github.com/Pamir-AI/distiller-cm5-python/tree/BHV)
+</Note>
+
+## First Time Setup
+
+> **Note**: If we set up the device for you at the booth, you can skip this section. This is only for badges with disconnected batteries.
+
+To set up the device for the first time, you need to connect the battery to the board. This requires disassembly:
+
+1. Use the provided Phillips screwdriver to remove the two screws on the back
+2. Take the battery wire and **quickly** insert it into the battery connector
+   - The connector only goes in one way, so you cannot mess up the orientation
+
+### Verification
+
+✅ **Success**: When the battery is inserted, the LED turns on briefly and then turns off. This confirms successful battery connection.
+
+⚠️ **Warning**: If any light stays on after battery insertion, the setup was incorrect. Please repeat the process.
+
+## Quick Start Guide
+
+The main display is an e-ink screen that does not support touch input. Navigation uses the physical buttons:
+
+- **Left buttons**: Up and down navigation
+- **Right button**: Enter/select
+
+![Navigation buttons](/images/image.png)
+
+![Enter button](/images/Screenshot2025-08-08at11.09.35PM.png)
+
+### Powering On
+
+1. Press and hold the **enter** button
+2. Flip the badge to its back
+3. Observe the back LED turn on
+4. Release the **enter** button
+
+The first boot takes approximately 1 minute. The device is ready when the graphical user interface appears.
+
+### Force Power Off
+
+⚠️ **Emergency use only** - Use this only if the device becomes unresponsive. For normal shutdown, see the next section.
+
+Press and hold the **up** and **enter** buttons for 5 seconds until the back LED turns off.
+
+## Hardware Overview and Peripherals
+
+The badge is powered by a Raspberry Pi Compute Module 5 - essentially a full Raspberry Pi in half the size. Our custom PCB adds the following functionality:
+
+### 1. RP2040 Microcontroller
+
+A Raspberry Pi Pico acts as the board manager, handling:
+
+- Button inputs
+- LED control
+- Battery charging and status
+- Power management
+- Learn how to hack it with our SDK
+
+### 2. Audio Input
+
+Built-in microphone enables voice interaction with the onboard LLM.
+
+### 3. SD Card Slot
+
+Unlike standard Raspberry Pi setups, this slot serves as storage expansion rather than OS loading.
+
+### 4. E-ink Drivers
+
+Physical voltage boost circuit and tri-state buffer enable e-ink display control from both the microcontroller and Raspberry Pi 5.
+
+### 5. Colored LEDs
+
+Set colors using the AI assistant through the UI (covered in later chapters).
+
+### 6. GPIO Headers
+
+Standard Raspberry Pi GPIO headers are available on the PCB. To access them:
+
+1. Remove the two screws from the back
+2. Set aside the battery
+
+---
+
+_For additional support and advanced usage, refer to the SDK documentation and Python source files linked above._
+
 # ⚡ Charging Your Device
 
 ### Charger Compatibility
@@ -62,7 +150,7 @@ When battery level is between 1% and 5%:
    - Insert the **CM5** gently but firmly. Make sure both connectors click into place — you should hear **two audible clicks**.
    - Do **not** connect the USB-C cable yet.
 3. **Power On**:
-   - Long-press the **Select** button to boot the device.
+   - Long-press the **Enter** button to boot the device.
 
 **No charging indication:**
 
