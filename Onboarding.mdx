@@ -3,73 +3,68 @@ title: "Device Setup and Usage Guide"
 description: "What to do once you receive the device"
 ---
 
-## Power Setup
+## Step 1 : Power on the device
 
 To power on the device, connect it to the provided power supply using the first USB-C port on the left side of the device.
 
-**Power Requirements:**
+<img
+  src="/images/instruction/step_1.png"
+  alt="Step 1 Pn"
+  className="mx-auto"
+  style={{ width:"37%" }}
+/>
 
-- Minimum 27W power supply
-- 9V at 3A output
-- Use only the leftmost USB-C port for power
+> Note, please use the power chager come with the device.
 
-## Initial Network Setup
+Once powered on, wait for the loading screen to finish
+
+<img
+  src="/images/instruction/loading_screen.png"
+  alt="Loading Screen Pn"
+  title="Loading Screen Pn"
+  className="mx-auto"
+  style={{ width:"57%" }}
+/>
+
+## Step 2 : Initial Network Setup
 
 ### First-Time WiFi Configuration
 
+<img
+  src="/images/instruction/wifi_screen.png"
+  alt="Wifi Screen Pn"
+  title="Wifi Screen Pn"
+  className="mx-auto"
+  style={{ width:"63%" }}
+/>
+
 1. When the device has never been connected to your network, it will automatically prompt you to scan a QR code
-2. Scanning this QR code opens a website where you can enter your WiFi network credentials
-3. Complete the setup process by entering the desired network information
+2. Scan the QR code on the left will auto connect your phone to the device's Access point.
+3. A captive website should pop up for you to select and enter your WiFi network credentials, if not, you can scan the 2nd QR on the right to enter the website manually.
 4. Once setup is complete, the device will connect to the network and display a new QR code
 
-### Accessing the Web Interface
+> you can also try to do it manually by selecting the wifi name and password (shown under the left QR Code), then visit 192.168.4.1:8080 
 
-After initial setup, scan the new QR code displayed on the device screen. This will redirect you to the device's web interface.
+### Step 3 : Accessing the Web Interface
 
-## Project Management
+<img
+  src="/images/instruction/access_screen.png"
+  alt="Access Screen Pn"
+  title="Access Screen Pn"
+  className="mx-auto"
+  style={{ width:"64%" }}
+/>
 
-The web interface provides a GUI for easy project creation and management:
+After WIFI setup, there are many way to access your device.
 
-- Create new projects through the graphical interface
-- All projects are created in the `projects` directory located inside the home directory
-- Open dedicated terminal sessions (tmux) for each project
-- Support for multiple terminals per project or working on different projects simultaneously
-- Sessions are persistent as long as the device is powered on
-- Work on projects directly from the terminal environment
+- If you scan the QR code with your phone, it will take you to the **Phone UI** (which we will cover in details in UI section).
+- If you enter the personal url on your desktop, it will take you to **VSCode UI**.
 
-### Mobile Access
+### Optional : Access via Local Network
 
-You can switch to your phone to continue working when you need to step away from your laptop. The mobile UI is still a work in progress, but remains very usable for most tasks.
+If you want to use the Web UI via local access, you can visit [http://{Your Device IP}/distiller/https/](https://192.168.4.184/distiller/https/) 
 
-### File Management
-
-The web interface includes a built-in file explorer that allows you to:
-
-- Browse project files and directories
-- Download files to your local device by right-clicking and selecting download
-- Conveniently transfer files between the device and your local machine
-
-## Claude Code Integration
-
-The device comes with Claude Code pre-installed and ready to use.
-
-**Important:** Always use `distiller-cc` instead of the standard `claude` command. The `distiller-cc` wrapper automatically loads the entire hardware SDK context, enabling you to ask questions about the hardware directly without needing to reference documentation manually.
-
-### Standard Mode
-
-Launch Claude Code from any directory using:
-
-```bash
-distiller-cc
-```
-
-This command is a wrapper around the standard `claude` command that:
-
-- Sets up a default Claude Code environment with custom permissions configured for optimal security
-- Automatically loads comprehensive hardware SDK documentation into context
-- Enables direct hardware-related questions and programming assistance
-
-You can ask Claude about any aspect of the hardware, including GPIO pins, sensors, displays, audio, camera, and more - it has complete knowledge of the hardware SDK.
+Which will then guide you to a page to help set up HTTPS trust with your browser.
 
 ### Hardware Reference
 
@@ -78,16 +73,6 @@ For GPIO pin configurations and hardware connections, refer to the pin-out diagr
 ![Pin Out Info Pn](/images/pin-out-info.png)
 
 For detailed GPIO pin description, please visit link [here](https://pinout.xyz/)
-
-### YOLO Mode
-
-For advanced users who want fewer restrictions:
-
-```bash
-distiller-cc yolo
-```
-
-This launches Claude Code with less restrictive permissions, requiring minimal user intervention. Use with caution as this reduces safety guardrails.
 
 ## Status LED System
 
