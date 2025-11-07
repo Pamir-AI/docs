@@ -18,7 +18,7 @@
     },
     {
       "group": "Web UIs",
-      "pages": ["PhoneUI, VSCodeUI"]
+      "pages": ["PhoneUI", "VSCodeUI"]
     }
   ],
   "footerSocials": {
