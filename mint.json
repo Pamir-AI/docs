@@ -1,6 +1,6 @@
 {
   "name": "Distiller Starter Kit",
-  "logo": { "dark": "/logo/Dark.png", "light": "/logo/Light.png" },
+  "logo": { "dark": "/logo/logo.png", "light": "/logo/logo.png" },
   "favicon": "/favicon.svg",
   "colors": {
     "primary": "#0D9373",
@@ -15,6 +15,10 @@
     {
       "group": "Get Started",
       "pages": ["Onboarding"]
+    },
+    {
+      "group": "Web UIs",
+      "pages": ["PhoneUI, VSCodeUI"]
     }
   ],
   "footerSocials": {
