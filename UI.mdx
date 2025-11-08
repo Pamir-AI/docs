@@ -1,0 +1,60 @@
+---
+title: "Web UI"
+description: "Web App Tutorial"
+---
+
+> The phone app is a heavily modified open-source project called [Happy](https://github.com/slopus/happy). Thanks for their contribution.
+
+## Start a session
+
+You can start a session via claude or codex
+
+> The device come with free claude trial but to use codex you need to login via Web UI first.
+
+<img
+  src="/images/UI/phone_session_img.png"
+  alt="Phone Session "
+  title="Phone Session "
+  className="mx-auto"
+  style={{ width:"50%" }}
+/>
+
+### Keep sessions running in background
+
+Phone sessions will run in the background by default.
+
+However, in the VSCode UI, if you start a session via extensions, the session will terminate when you close the web tab. However, if the session is started in the VSCode terminal, it will continue running in the background, even if you close your browser or desktop.
+
+![Web Claude Gi](/images/UI/web_claude.gif)
+
+## Web App Port Detection
+
+Once you spin up a web app on a available port, it will be auto-detected and captured by the phone app. You can click the link to access the web app you created, which is hosted on the device.
+
+<img
+  src="/images/UI/phone_ports.gif"
+  alt="Phone Ports Gi"
+  title="Phone Ports Gi"
+  className="mx-auto"
+  style={{ width:"29%" }}
+/>
+
+However to kill the process you need to ask agent to help you with that for now.
+
+![Web Port Gi](/images/UI/web_port.gif)
+
+## Session Management
+
+On the Phone UI, you can shut down a session by accessing it and then selecting the terminate option.
+
+<img
+  src="/images/UI/phone_kill.gif"
+  alt="Phone Kill Gi"
+  title="Phone Kill Gi"
+  className="mx-auto"
+  style={{ width:"43%" }}
+/>
+
+In the VSCode Web UI, you can terminate a session by accessing the session manager extension.
+
+![Web Session Manage Gi](/images/UI/web_session_manage.gif)

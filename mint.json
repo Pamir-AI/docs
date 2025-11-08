@@ -14,11 +14,11 @@
   "navigation": [
     {
       "group": "Get Started",
-      "pages": ["Onboarding"]
+      "pages": ["Onboarding", "UI"]
     },
     {
-      "group": "Web UIs",
-      "pages": ["PhoneUI", "VSCodeUI"]
+      "group": "Tutorials",
+      "pages": ["Examples"]
     }
   ],
   "footerSocials": {
