@@ -1,5 +1,5 @@
 ---
-title: "Device Setup and Usage Guide"
+title: "Device Setup"
 description: "What to do once you receive the device"
 ---
 
@@ -11,7 +11,7 @@ To power on the device, connect it to the provided power supply using the first 
   src="/images/instruction/step_1.png"
   alt="Step 1 Pn"
   className="mx-auto"
-  style={{ width:"37%" }}
+  style={{ width:"46%" }}
 />
 
 > Note, please use the power charger come with the device.
@@ -23,7 +23,7 @@ Once powered on, wait for the loading screen to finish
   alt="Loading Screen Pn"
   title="Loading Screen Pn"
   className="mx-auto"
-  style={{ width:"57%" }}
+  style={{ width:"69%" }}
 />
 
 ## Step 2 : Initial Network Setup
@@ -31,11 +31,11 @@ Once powered on, wait for the loading screen to finish
 ### First-Time WiFi Configuration
 
 <img
-  src="/images/instruction/wifi_screen_1229.png"
-  alt="Wifi Screen Pn"
-  title="Wifi Screen Pn"
+  src="/images/Screenshot2026-02-10at2.41.12PM.png"
+  alt="Screenshot2026 02 10at2 41 12PM"
+  title="Screenshot2026 02 10at2 41 12PM"
   className="mx-auto"
-  style={{ width:"63%" }}
+  style={{ width:"71%" }}
 />
 
 1. When the device has never been connected to your network, it will automatically prompt you to scan a QR code
@@ -43,32 +43,87 @@ Once powered on, wait for the loading screen to finish
 3. A captive website should pop up for you to select and enter your WiFi network credentials, if not, you can visit the website manually.
 4. Once setup is complete, the device will connect to the network and display a new QR code
 
-> you can also try to do it manually by selecting the wifi name and password (shown under the left QR Code), then visit 192.168.4.1:8080
->
 > To reset wifi, visit  [**http://your-device-ip:8080/**](http://your-device-ip:8080/)
 
-## Step 3 : Accessing the Web Interface
+## **Accessing Clawd Bot**
 
 <img
-  src="/images/instruction/access_screen.png"
-  alt="Access Screen Pn"
-  title="Access Screen Pn"
+  src="/images/Screenshot2026-02-10at2.43.55PM.png"
+  alt="Screenshot2026 02 10at2 43 55PM"
+  title="Screenshot2026 02 10at2 43 55PM"
   className="mx-auto"
-  style={{ width:"64%" }}
+  style={{ width:"75%" }}
 />
 
-After WIFI setup, there are many way to access your device.
+- Scan the QR code and send that link to your laptop.
 
-- If you scan the QR code with your phone, it will take you to the **Phone UI** (which we will cover in details in UI section).
-- If you enter the personal url on your desktop, it will take you to **VSCode UI**.
+                                     or
 
-### Optional : Access via Local Network
+- Type in the local IP address directly into your browser.
 
-If you want to use the Web UI via local access, you can visit [**http://your-device-ip/distiller/https/**](http://your-device-ip/distiller/https/)
+### **Insert Password**
 
-Which will then guide you to a page to help set up HTTPS trust with your browser.
+<img
+  src="/images/Screenshot2026-02-10at2.46.10PM.png"
+  alt="Screenshot2026 02 10at2 46 10PM"
+  title="Screenshot2026 02 10at2 46 10PM"
+  className="mx-auto"
+  style={{ width:"67%" }}
+/>
 
-### Optional : Access via SSH
+1. Go to Overview tab on the left side
+2. Type in the password on the device’s screen
+3. Click connect
+
+_Note: If you get lost with the UI navigation at any point, refer to _[_<u>this video</u>_](https://www.youtube.com/watch?v=eOzQgOqQ7hk)
+
+### **Connect API Key**
+
+1. Go to **Config** tab
+2. Then the**Environment**  tab
+3. Click **All **at the top
+4. Paste in your API key from Anthropic or OpenAI under the**Custom Entries**  block
+5. Click the red Save button at the top.
+
+> How to get your API key: 
+>
+> [<u>Anthropic</u>](https://www.youtube.com/watch?v=vgncj7MJbVU)
+>
+> [<u>OpenAI</u>](https://www.youtube.com/watch?v=OB99E7Y1cMA)
+
+\
+Check at this point if you can talk to Clawdbot in the Chat channel.
+
+### **Connect Telegram**
+
+<img
+  src="/images/Screenshot2026-02-10at2.47.55PM.png"
+  alt="Screenshot2026 02 10at2 47 55PM"
+  title="Screenshot2026 02 10at2 47 55PM"
+  className="mx-auto"
+  style={{ width:"20%" }}
+/>
+
+ 1. Open Telegram
+ 2. Search for “BotFather”
+ 3. Type “/newbot”
+ 4. Follow instructions to create the bot, its will generate a Token for you
+ 5. Copy the Token.
+ 6. Go back to Clawd Bot and click on Channels
+ 7. Scroll down to find “**Telegram Bot Token**” and paste the token
+ 8. Scroll down and click Save.
+ 9. Now search for your bot that you just named
+10. Click on it and copy the Pairing Code from it
+11. Go back to Clawd Bot Telegram settings and scroll down to “**Allow From**”
+12. Paste the Paring Code
+13. Scroll all the way down and click Save.
+14. Check if it's working on telegram.
+
+## Connect Via Distiller App
+
+> Coming soon ...  
+
+## Optional : Access via SSH
 
 ```bash
 ssh distiller@<device-ip>

@@ -19,10 +19,6 @@
     {
       "group": "Tutorials",
       "pages": ["Examples"]
-    },
-    {
-      "group": "Debugging",
-      "pages": ["SAM_Debug"]
     }
   ],
   "footerSocials": {
