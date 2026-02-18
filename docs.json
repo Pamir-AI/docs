@@ -6,12 +6,6 @@
     "primary": "#0D9373"
   },
   "navigation": {
-    "pages": [
-      {
-        "group": "Getting Started",
-        "pages": []
-      },
-      "untitled-page"
-    ]
+    "groups": []
   }
 }
