@@ -14,11 +14,7 @@
   "navigation": [
     {
       "group": "Get Started",
-      "pages": ["Onboarding", "UI"]
-    },
-    {
-      "group": "Tutorials",
-      "pages": ["Examples"]
+      "pages": ["Onboarding"]
     }
   ],
   "footerSocials": {
